@@ -4,7 +4,7 @@ This repo contains the code for WWW'25 Oral paper "G-Refer: Graph Retrieval-Augm
 
 G-Refer is a novel framework using **Graph Retrieval-augmented Large Language Models** for **explainable recommendation**. Specifically, G-Refer first employs a hybrid graph retrieval mechanism to retrieve explicit CF signals from both structural and semantic perspectives. To bridge the modality gap, knowledge pruning and retrieval-augmented fine-tuning are introduced to enhance the ability of LLMs to process and utilize the retrieved CF information to generate explanations. 
 
-For more details, check out our paper <a href="">here</a>!
+For more details, check out our paper <a href="https://arxiv.org/abs/2502.12586">here</a>!
 
 ![HippoRAG](images/framework.png)
 
@@ -114,5 +114,10 @@ The Hong Kong University of Science and Technology (Guangzhou)
 If you find this work useful, please consider citing our paper:
 
 ```
-
+@article{li2025g,
+  title={G-Refer: Graph Retrieval-Augmented Large Language Model for Explainable Recommendation},
+  author={Li, Yuhan and Zhang, Xinni and Luo, Linhao and Chang, Heng and Ren, Yuxiang and King, Irwin and Li, Jia},
+  journal={arXiv preprint arXiv:2502.12586},
+  year={2025}
+}
 ```
