@@ -32,7 +32,7 @@ To use LLaMA-series for retrieval-augmented fine-tuning, download the pretrained
 
 ## Setting up your data
 
-Hybrid Graph Retrieval on three datasets require some computation resource and time. If you want to explore G-Refer, we recommend you to download the processed datasets and retrieved paths/nodes and directly run retrieval-augmented fine-tuning. You can download all related files from [here]().
+Hybrid Graph Retrieval on three datasets require some computation resource and time. If you want to explore G-Refer, we recommend you to download the processed datasets and retrieved paths/nodes and directly run retrieval-augmented fine-tuning. You can download all related files from [here](https://drive.google.com/drive/folders/14_fGrwj5En4Atny1OsP2WopN5GzOiOP1?usp=sharing).
 
 Please place the downloaded `saved_models` and `saved_explanations` folders under the `path_retriever` directory. Please place the downloaded `data` and `raft_data` folders under the G-Refer root.
 
