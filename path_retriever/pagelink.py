@@ -129,7 +129,8 @@ if args.max_num_samples > 0:
 
 pred_edge_to_comp_g_edge_mask = {}
 pred_edge_to_paths = {}
-for i in tqdm(test_ids):
+print(f'start explaining {len(test_ids)} edges')
+for i in (test_ids):
     src_nid, tgt_nid = test_src_nids[i].unsqueeze(0), test_tgt_nids[i].unsqueeze(0)
     
     with torch.no_grad():
