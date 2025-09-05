@@ -57,6 +57,8 @@ def create_dgl_graph(pyg_data, pkl_data):
     g.add_edges(bought_by_src, bought_by_dst, etype='bought_by')
     g.add_edges(likes_src, likes_dst, etype='likes')
 
+    print(f'the code is ok')
+
     print(f"Processed likes edges: {len(likes_src)}")
     print(f"Processed buys edges: {len(buys_src)}")
     print(f"Processed bought_by edges: {len(bought_by_src)}")
