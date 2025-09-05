@@ -132,7 +132,7 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage)
         value=list of lists, each list contains (cannonical edge type, source node ids, target node ids)
     '''
     # graph_saving_path = f'{dataset_dir}/{dataset_name}_{split}.bin'
-    graph_saving_path = f'{dataset_dir}/{split}_graph.bin'
+    graph_saving_path = f'{dataset_dir}/{dataset_name}/{split}_graph.bin'
     graph_list, _ = dgl.load_graphs(graph_saving_path)
     # pred_pair_to_edge_labels = torch.load(f'{graph_saving_path}_pred_pair_to_edge_labels')
     # pred_pair_to_path_labels = torch.load(f'{graph_saving_path}_pred_pair_to_path_labels')
