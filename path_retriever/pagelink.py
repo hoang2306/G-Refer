@@ -107,7 +107,9 @@ mp_g, train_pos_g, train_neg_g, val_pos_g, val_neg_g, test_pos_g, test_neg_g = [
 # model = HeteroLinkPredictionModel(encoder, args.src_ntype, args.tgt_ntype, args.link_pred_op, **pred_kwargs)
 encoder = LightGCN(mp_g, args.emb_dim, 2)
 model = HeteroLinkPredictionModel(encoder, args.src_ntype, args.tgt_ntype, args.link_pred_op, **pred_kwargs)
-state = torch.load(f'{args.saved_model_dir}/{args.saved_model_name}_{args.split}_lightgcn.pth', map_location='cpu')
+# state = torch.load(f'{args.saved_model_dir}/{args.saved_model_name}_{args.split}_lightgcn.pth', map_location='cpu')
+state = torch.load(f'{args.saved_model_dir}/{args.dataset_name}_model_{args.split}.pth', map_location='cpu')
+
 model.load_state_dict(state)  
 
 pagelink = PaGELink(model, 
