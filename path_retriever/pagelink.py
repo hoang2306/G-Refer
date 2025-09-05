@@ -117,7 +117,7 @@ pagelink = PaGELink(model,
                     alpha=args.alpha, 
                     beta=args.beta, 
                     num_epochs=args.num_epochs,
-                    log=True).to(device)
+                    log=False).to(device)
 
 
 test_src_nids, test_tgt_nids = test_pos_g.edges()
@@ -130,7 +130,7 @@ if args.max_num_samples > 0:
 pred_edge_to_comp_g_edge_mask = {}
 pred_edge_to_paths = {}
 print(f'start explaining {len(test_ids)} edges')
-for i in (test_ids):
+for i in tqdm(test_ids):
     src_nid, tgt_nid = test_src_nids[i].unsqueeze(0), test_tgt_nids[i].unsqueeze(0)
     
     with torch.no_grad():
