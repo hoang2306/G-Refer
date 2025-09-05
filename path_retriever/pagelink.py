@@ -30,7 +30,7 @@ parser.add_argument('--device_id', type=int, default=0)
 '''
 Dataset args
 '''
-parser.add_argument('--dataset_dir', type=str, default='datasets')
+parser.add_argument('--dataset_dir', type=str, default='data')
 parser.add_argument('--dataset_name', type=str, default='aug_citation')
 parser.add_argument('--valid_ratio', type=float, default=0.1) 
 parser.add_argument('--test_ratio', type=float, default=0.2)
