@@ -195,10 +195,11 @@ def main():
     dict_data = data.to_dict("list")
 
     # Define write file
-    write_file = f"/home/yuhanli/lyh/GRec/convert_files/{args.dataset}/{split_map[args.split]}.json"
+    # write_file = f"/home/yuhanli/lyh/GRec/convert_files/{args.dataset}/{split_map[args.split]}.json"
+    write_file = f"convert_files/{args.dataset}/{split_map[args.split]}.json"
 
     # load pagelink retrieval results
-    with open(f'PaGE-Link/saved_explanations/pagelink_{args.dataset}_model_{args.split}_pred_edge_to_paths', 'rb') as f:
+    with open(f'saved_explanations/pagelink_{args.dataset}_model_{args.split}_pred_edge_to_paths', 'rb') as f:
         pagelink_retrieval_results = pickle.load(f)
 
     flattened_dense_retrieval_results = flatten_dense_retrieval_results(dense_retrieval_results, mapper, args.k)
