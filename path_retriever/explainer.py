@@ -331,10 +331,11 @@ class PaGELink(nn.Module):
         edge_mask_dict : dict
             key=`etype`, value=torch.nn.Parameter with size being the number of `etype` edges
         """
-
+        print('start get_edge_mask function')
         self.model.eval()
         device = ghetero.device
         
+        print(f'start ntype_hetero_nids_to_homo_nids')
         ntype_hetero_nids_to_homo_nids = get_ntype_hetero_nids_to_homo_nids(ghetero)    
         homo_src_nid = ntype_hetero_nids_to_homo_nids[(self.src_ntype, int(src_nid))]
         homo_tgt_nid = ntype_hetero_nids_to_homo_nids[(self.tgt_ntype, int(tgt_nid))]
