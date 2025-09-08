@@ -69,6 +69,9 @@ def create_dgl_graph(pyg_data, pkl_data):
 
     return g
 
+def slash():
+    print('-'*30)
+
 def main():
     args = parse_args()
     
@@ -76,13 +79,18 @@ def main():
     
     pyg_data = load_data(f'data/{args.dataset}/data_{args.split}.pt')
     pkl_data = load_pickle(f'data/{args.dataset}/{args.split}.pkl')
+
+    slash()
+    print(f'pyg_data: {pyg_data}')
+    slash()
+    print(f'pkl_data: {pkl_data.shape}')
     
     dgl_graph = create_dgl_graph(pyg_data, pkl_data)
 
-    print('-'*30)
+    slash()
     print(f'dgl_graph: {dgl_graph}')
-    print('-'*30)
-    
+    slash()
+
     # Save only the DGL graph
     dgl.save_graphs(f'./data/{args.dataset}/{args.split}_graph.bin', [dgl_graph])
 
