@@ -81,9 +81,9 @@ def main():
     pkl_data = load_pickle(f'data/{args.dataset}/{args.split}.pkl')
 
     slash()
-    print(f'pyg_data: {pyg_data}')
-    slash()
-    print(f'pkl_data: {pkl_data.shape}')
+    # print(f'pyg_data: {pyg_data}')
+    # slash()
+    print(f'pkl_data: {pkl_data}')
     
     dgl_graph = create_dgl_graph(pyg_data, pkl_data)
 
