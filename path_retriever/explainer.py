@@ -335,9 +335,9 @@ class PaGELink(nn.Module):
         self.model.eval()
         device = ghetero.device
         
-        print(f'start ntype_hetero_nids_to_homo_nids')
+        # print(f'start ntype_hetero_nids_to_homo_nids')
         ntype_hetero_nids_to_homo_nids = get_ntype_hetero_nids_to_homo_nids(ghetero)   
-        print(f'done ntype_hetero_nids_to_homo_nids') 
+        # print(f'done ntype_hetero_nids_to_homo_nids') 
         homo_src_nid = ntype_hetero_nids_to_homo_nids[(self.src_ntype, int(src_nid))]
         homo_tgt_nid = ntype_hetero_nids_to_homo_nids[(self.tgt_ntype, int(tgt_nid))]
 
@@ -560,7 +560,7 @@ class PaGELink(nn.Module):
                                                              ghetero, 
                                                              num_hops)
         # Learn the edge mask on the computation graph
-        print(f'start comp_g_edge_mask_dict')
+        # print(f'start comp_g_edge_mask_dict')
         comp_g_edge_mask_dict = self.get_edge_mask(comp_g_src_nid, 
                                                    comp_g_tgt_nid, 
                                                    comp_g, 
@@ -571,7 +571,7 @@ class PaGELink(nn.Module):
                                                    with_path_loss)
 
         # Extract paths 
-        print(f'start comp_g_paths')
+        # print(f'start comp_g_paths')
         comp_g_paths = self.get_paths(comp_g_src_nid,
                                       comp_g_tgt_nid, 
                                       comp_g, 
@@ -581,7 +581,7 @@ class PaGELink(nn.Module):
         
         
         # Covert the node id in computation graph to original graph
-        print(f'start paths')
+        # print(f'start paths')
         paths = comp_g_paths_to_paths(comp_g, comp_g_paths)
         
         if return_mask:
