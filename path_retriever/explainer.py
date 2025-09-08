@@ -556,6 +556,7 @@ class PaGELink(nn.Module):
                                                              ghetero, 
                                                              num_hops)
         # Learn the edge mask on the computation graph
+        print(f'start comp_g_edge_mask_dict')
         comp_g_edge_mask_dict = self.get_edge_mask(comp_g_src_nid, 
                                                    comp_g_tgt_nid, 
                                                    comp_g, 
@@ -566,6 +567,7 @@ class PaGELink(nn.Module):
                                                    with_path_loss)
 
         # Extract paths 
+        print(f'start comp_g_paths')
         comp_g_paths = self.get_paths(comp_g_src_nid,
                                       comp_g_tgt_nid, 
                                       comp_g, 
@@ -575,6 +577,7 @@ class PaGELink(nn.Module):
         
         
         # Covert the node id in computation graph to original graph
+        print(f'start paths')
         paths = comp_g_paths_to_paths(comp_g, comp_g_paths)
         
         if return_mask:
