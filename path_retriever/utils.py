@@ -175,8 +175,10 @@ def get_homo_nids_to_ntype_hetero_nids(ghetero):
     ----------
     homo_nids_to_ntype_hetero_nids : dict
     '''
+    print('start ghomo')
     ghomo = dgl.to_homogeneous(ghetero)
     homo_nids = range(ghomo.num_nodes())
+    print(f'done homo_nids')
     ntypes = ghetero.ntypes
     # This line relies on the default order of ntype_ids is the order in ghetero.ntypes
     ntypes = [ntypes[i] for i in ghomo.ndata[dgl.NTYPE]] 
