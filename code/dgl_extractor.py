@@ -57,7 +57,7 @@ def create_dgl_graph(pyg_data, pkl_data):
     g.add_edges(bought_by_src, bought_by_dst, etype='bought_by')
     g.add_edges(likes_src, likes_dst, etype='likes')
 
-    print(f'the code is ok')
+    # print(f'the code is ok')
 
     print(f"Processed likes edges: {len(likes_src)}")
     print(f"Processed buys edges: {len(buys_src)}")
@@ -80,16 +80,16 @@ def main():
     pyg_data = load_data(f'data/{args.dataset}/data_{args.split}.pt')
     pkl_data = load_pickle(f'data/{args.dataset}/{args.split}.pkl')
 
-    slash()
+    # slash()
     # print(f'pyg_data: {pyg_data}')
     # slash()
-    print(f'pkl_data: {pkl_data}')
+    # print(f'pkl_data: {pkl_data}')
     
     dgl_graph = create_dgl_graph(pyg_data, pkl_data)
 
-    slash()
-    print(f'dgl_graph: {dgl_graph}')
-    slash()
+    # slash()
+    # print(f'dgl_graph: {dgl_graph}')
+    # slash()
 
     # Save only the DGL graph
     dgl.save_graphs(f'./data/{args.dataset}/{args.split}_graph.bin', [dgl_graph])

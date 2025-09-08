@@ -103,8 +103,8 @@ set_seed(0)
 processed_g = load_dataset(args.dataset_dir, args.dataset_name, args.split, args.valid_ratio, args.test_ratio, args.stage)[1]
 mp_g, train_pos_g, train_neg_g, val_pos_g, val_neg_g, test_pos_g, test_neg_g = [g.to(device) for g in processed_g]
 
-print(f'processed_g: {processed_g}')
-print(f'graph mg_g: {mp_g}')
+# print(f'processed_g: {processed_g}')
+# print(f'graph mg_g: {mp_g}')
 # exit()
 
 encoder = HeteroRGCN(mp_g, args.emb_dim, args.hidden_dim, args.out_dim)
@@ -155,7 +155,7 @@ for i in tqdm(test_ids):
         except Exception as e:
             print(f"Error explaining edge ({src_nid}, {tgt_nid}): {str(e)}")
             paths, comp_g_edge_mask_dict = [], {}
-            exit()
+            # exit()
         
         pred_edge_to_comp_g_edge_mask[src_tgt] = comp_g_edge_mask_dict 
         pred_edge_to_paths[src_tgt] = paths

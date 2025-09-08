@@ -175,13 +175,13 @@ def get_homo_nids_to_ntype_hetero_nids(ghetero):
     ----------
     homo_nids_to_ntype_hetero_nids : dict
     '''
-    print('start ghomo')
-    print(f'graph: {ghetero}')
+    # print('start ghomo')
+    # print(f'graph: {ghetero}')
     ghomo = dgl.to_homogeneous(ghetero)
-    print(f'done ghomo')
+    # print(f'done ghomo')
     homo_nids = range(ghomo.num_nodes())
-    print(ghomo.num_nodes())
-    print(f'done homo_nids')
+    # print(ghomo.num_nodes())
+    # print(f'done homo_nids')
     ntypes = ghetero.ntypes
     # This line relies on the default order of ntype_ids is the order in ghetero.ntypes
     ntypes = [ntypes[i] for i in ghomo.ndata[dgl.NTYPE]] 
@@ -203,9 +203,9 @@ def get_ntype_hetero_nids_to_homo_nids(ghetero):
     ----------
     ntype_hetero_nids_to_homo_nids : dict
     '''
-    print('start get_homo_nids_to_ntype_hetero_nids')
+    # print('start get_homo_nids_to_ntype_hetero_nids')
     tmp = get_homo_nids_to_ntype_hetero_nids(ghetero)
-    print(f'done get_homo_nids_to_ntype_hetero_nids')
+    # print(f'done get_homo_nids_to_ntype_hetero_nids')
     ntype_hetero_nids_to_homo_nids = {v: k for k, v in tmp.items()}
     return ntype_hetero_nids_to_homo_nids
 
