@@ -198,7 +198,9 @@ def get_ntype_hetero_nids_to_homo_nids(ghetero):
     ----------
     ntype_hetero_nids_to_homo_nids : dict
     '''
+    print('start get_homo_nids_to_ntype_hetero_nids')
     tmp = get_homo_nids_to_ntype_hetero_nids(ghetero)
+    print(f'done get_homo_nids_to_ntype_hetero_nids')
     ntype_hetero_nids_to_homo_nids = {v: k for k, v in tmp.items()}
     return ntype_hetero_nids_to_homo_nids
 
