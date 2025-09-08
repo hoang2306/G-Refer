@@ -545,6 +545,7 @@ class PaGELink(nn.Module):
             key=`etype`, value=torch.nn.Parameter with size being the number of `etype` edges
         """
         # Extract the computation graph (k-hop subgraph)
+        print(f'start explain')
         (comp_g_src_nid, 
          comp_g_tgt_nid, 
          comp_g, 
