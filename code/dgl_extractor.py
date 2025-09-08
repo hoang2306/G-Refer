@@ -78,6 +78,10 @@ def main():
     pkl_data = load_pickle(f'data/{args.dataset}/{args.split}.pkl')
     
     dgl_graph = create_dgl_graph(pyg_data, pkl_data)
+
+    print('-'*30)
+    print(f'dgl_graph: {dgl_graph}')
+    print('-'*30)
     
     # Save only the DGL graph
     dgl.save_graphs(f'./data/{args.dataset}/{args.split}_graph.bin', [dgl_graph])
