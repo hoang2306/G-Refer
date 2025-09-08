@@ -105,7 +105,7 @@ mp_g, train_pos_g, train_neg_g, val_pos_g, val_neg_g, test_pos_g, test_neg_g = [
 
 print(f'processed_g: {processed_g}')
 print(f'graph mg_g: {mp_g}')
-exit()
+# exit()
 
 encoder = HeteroRGCN(mp_g, args.emb_dim, args.hidden_dim, args.out_dim)
 model = HeteroLinkPredictionModel(encoder, args.src_ntype, args.tgt_ntype, args.link_pred_op, **pred_kwargs)
@@ -155,6 +155,7 @@ for i in tqdm(test_ids):
         except Exception as e:
             print(f"Error explaining edge ({src_nid}, {tgt_nid}): {str(e)}")
             paths, comp_g_edge_mask_dict = [], {}
+            exit()
         
         pred_edge_to_comp_g_edge_mask[src_tgt] = comp_g_edge_mask_dict 
         pred_edge_to_paths[src_tgt] = paths
