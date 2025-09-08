@@ -176,6 +176,7 @@ def get_homo_nids_to_ntype_hetero_nids(ghetero):
     homo_nids_to_ntype_hetero_nids : dict
     '''
     print('start ghomo')
+    print(f'graph: {ghetero}')
     ghomo = dgl.to_homogeneous(ghetero)
     print(f'done ghomo')
     homo_nids = range(ghomo.num_nodes())
