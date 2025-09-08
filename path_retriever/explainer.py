@@ -336,7 +336,8 @@ class PaGELink(nn.Module):
         device = ghetero.device
         
         print(f'start ntype_hetero_nids_to_homo_nids')
-        ntype_hetero_nids_to_homo_nids = get_ntype_hetero_nids_to_homo_nids(ghetero)    
+        ntype_hetero_nids_to_homo_nids = get_ntype_hetero_nids_to_homo_nids(ghetero)   
+        print(f'done ntype_hetero_nids_to_homo_nids') 
         homo_src_nid = ntype_hetero_nids_to_homo_nids[(self.src_ntype, int(src_nid))]
         homo_tgt_nid = ntype_hetero_nids_to_homo_nids[(self.tgt_ntype, int(tgt_nid))]
 
