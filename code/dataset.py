@@ -38,4 +38,5 @@ class DataMapper:
         return self.original_data.item_titles[dgl_item_id]
     
     def get_item_raw_text(self, dgl_item_id):
+        print(f'id sum: {dgl_item_id + self.num_users}, num_users: {self.num_users}, dgl_item_id: {dgl_item_id}')
         return self.original_data.raw_texts[dgl_item_id + self.num_users]
