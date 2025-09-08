@@ -103,6 +103,7 @@ set_seed(0)
 processed_g = load_dataset(args.dataset_dir, args.dataset_name, args.split, args.valid_ratio, args.test_ratio, args.stage)[1]
 mp_g, train_pos_g, train_neg_g, val_pos_g, val_neg_g, test_pos_g, test_neg_g = [g.to(device) for g in processed_g]
 
+print(f'processed_g: {processed_g}')
 print(f'graph mg_g: {mp_g}')
 exit()
 
