@@ -331,7 +331,7 @@ class PaGELink(nn.Module):
         edge_mask_dict : dict
             key=`etype`, value=torch.nn.Parameter with size being the number of `etype` edges
         """
-        print('start get_edge_mask function')
+        # print('start get_edge_mask function')
         self.model.eval()
         device = ghetero.device
         
@@ -549,7 +549,7 @@ class PaGELink(nn.Module):
             key=`etype`, value=torch.nn.Parameter with size being the number of `etype` edges
         """
         # Extract the computation graph (k-hop subgraph)
-        print(f'start explain')
+        # print(f'start explain')
         (comp_g_src_nid, 
          comp_g_tgt_nid, 
          comp_g, 
