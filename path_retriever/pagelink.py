@@ -134,6 +134,8 @@ if args.max_num_samples > 0:
 pred_edge_to_comp_g_edge_mask = {}
 pred_edge_to_paths = {}
 print(f'start explaining {len(test_ids)} edges')
+
+cnt_edge_error = 0
 for i in tqdm(test_ids):
     src_nid, tgt_nid = test_src_nids[i].unsqueeze(0), test_tgt_nids[i].unsqueeze(0)
     
@@ -153,7 +155,10 @@ for i in tqdm(test_ids):
                                                             args.max_path_length,
                                                             return_mask=True)
         except Exception as e:
-            print(f"Error explaining edge ({src_nid}, {tgt_nid}): {str(e)}")
+            # print(f"Error explaining edge ({src_nid}, {tgt_nid}): {str(e)}")
+            cnt_edge_error += 1
+            if cnt_edge_error % 100 == 0:
+                print(f'Number of edges failed to explain: {cnt_edge_error}')
             paths, comp_g_edge_mask_dict = [], {}
             # exit()
         
