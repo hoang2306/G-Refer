@@ -344,6 +344,7 @@ class PaGELink(nn.Module):
             score = self.model(src_nid, tgt_nid, ghetero, feat_nids)
             pred = (score > 0).int().item()
 
+        print(f'prune graph')
         if prune_graph:
             # The pruned graph for mask learning  
             ml_ghetero, etypes_to_pruned_ghetero_eid_masks = self._prune_graph(ghetero, 
