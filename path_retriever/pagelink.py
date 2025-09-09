@@ -133,7 +133,7 @@ if args.max_num_samples > 0:
 
 pred_edge_to_comp_g_edge_mask = {}
 pred_edge_to_paths = {}
-print(f'start explaining {len(test_ids)} edges')
+# print(f'start explaining {len(test_ids)} edges')
 
 cnt_edge_error = 0
 for i in tqdm(test_ids):

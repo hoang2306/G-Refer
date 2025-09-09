@@ -136,9 +136,9 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage)
     print(f'graph loading from: {graph_saving_path}')
     graph_list, _ = dgl.load_graphs(graph_saving_path)
 
-    print('-'*30)
-    print(f'graph loaded: {graph_list}')
-    print('-'*30)
+    # print('-'*30)
+    # print(f'graph loaded: {graph_list}')
+    # print('-'*30)
     # pred_pair_to_edge_labels = torch.load(f'{graph_saving_path}_pred_pair_to_edge_labels')
     # pred_pair_to_path_labels = torch.load(f'{graph_saving_path}_pred_pair_to_path_labels')
     g = graph_list[0]

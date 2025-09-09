@@ -346,7 +346,7 @@ class PaGELink(nn.Module):
             score = self.model(src_nid, tgt_nid, ghetero, feat_nids)
             pred = (score > 0).int().item()
 
-        print(f'prune graph')
+        # print(f'prune graph')
         if prune_graph:
             # The pruned graph for mask learning  
             ml_ghetero, etypes_to_pruned_ghetero_eid_masks = self._prune_graph(ghetero, 
@@ -365,7 +365,7 @@ class PaGELink(nn.Module):
 
         eweight_norm = 0
         EPS = 1e-3
-        print(f'start train')
+        # print(f'start train')
         for e in range(self.num_epochs):    
             
             # Apply sigmoid to edge_mask to get eweight
