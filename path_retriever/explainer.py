@@ -365,7 +365,7 @@ class PaGELink(nn.Module):
 
         eweight_norm = 0
         EPS = 1e-3
-        # print(f'start train')
+        # print(f'start train') # for debug
         for e in range(self.num_epochs):    
             
             # Apply sigmoid to edge_mask to get eweight
