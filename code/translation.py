@@ -177,6 +177,10 @@ def rerank_flattened_results(args, all_samples, mapper, write_file):
     print(f"Reranked and wrote {len(sorted_samples)} samples to {write_file}")
 
 
+def slash():
+    # for debug 
+    print('-' * 30) 
+
 def main():
     args = parse_args()
     
@@ -213,7 +217,10 @@ def main():
 
     all_samples = sample_generation(args, merged_results, dict_data, pyg_data)
 
-    print(f'all_samples example: {all_samples[:10]}')
+    # for debug, print the first 10 samples
+    for sample_ in all_samples[:10]:
+        print(sample_)
+        slash()
 
     # rerank and store the samples
     rerank_flattened_results(args, all_samples, mapper, write_file)
