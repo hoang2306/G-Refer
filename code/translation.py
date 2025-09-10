@@ -218,9 +218,9 @@ def main():
     all_samples = sample_generation(args, merged_results, dict_data, pyg_data)
 
     # for debug, print the first 10 samples
-    for sample_ in all_samples[:6]:
-        print(sample_)
-        slash()
+    # for sample_ in all_samples[:6]:
+    #     print(sample_)
+    #     slash()
 
     # rerank and store the samples
     rerank_flattened_results(args, all_samples, mapper, write_file)
