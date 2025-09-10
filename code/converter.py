@@ -133,6 +133,7 @@ def main():
     torch.save(data, save_path)
 
     print(f"Data saved to {save_path}")
+    print(f'len of data: {len(data.raw_texts)})')
 
 if __name__ == "__main__":
     main()
