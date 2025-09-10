@@ -69,7 +69,7 @@ class HeteroRGCN(nn.Module):
 
 class HeteroLinkPredictionModel(nn.Module):
     def __init__(self, encoder, src_ntype, tgt_ntype, link_pred_op='dot', **kwargs):
-        super().__init__    
+        super().__init__()
         self.encoder = encoder
         self.predictor = EdgePredictor(op=link_pred_op, **kwargs)
         self.src_ntype = src_ntype
