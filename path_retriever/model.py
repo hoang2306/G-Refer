@@ -50,7 +50,7 @@ class HeteroRGCNLayer(nn.Module):
 
 class HeteroRGCN(nn.Module):
     def __init__(self, g, emb_dim, hidden_size, out_size):
-        super(HeteroRGCN, self).__init__()
+        super().__init__()
         self.emb = HeteroEmbedding({ntype : g.num_nodes(ntype) for ntype in g.ntypes}, emb_dim)
         self.layer1 = HeteroRGCNLayer(emb_dim, hidden_size, g.etypes)
         self.layer2 = HeteroRGCNLayer(hidden_size, out_size, g.etypes)
