@@ -213,6 +213,8 @@ def main():
 
     all_samples = sample_generation(args, merged_results, dict_data, pyg_data)
 
+    print(f'all_samples example: {all_samples[:10]}')
+
     # rerank and store the samples
     rerank_flattened_results(args, all_samples, mapper, write_file)
 
