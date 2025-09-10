@@ -32,6 +32,7 @@ class DataMapper:
         self.num_users = len(self.original_data.user_id_to_node)
 
     def get_user_raw_text(self, dgl_user_id):
+        print(f'Getting raw text for user id: {dgl_user_id}')
         return self.original_data.raw_texts[dgl_user_id]
 
     def get_item_title(self, dgl_item_id):
