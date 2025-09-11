@@ -26,10 +26,12 @@ class KHopSubgraphDataset(Dataset):
         return data
 
 class DataMapper:
-    def __init__(self, pt_file_path):
+    def __init__(self, pt_file_path, debug_mode=False):
+        self.debug_mode = debug_mode
         self.original_data = torch.load(pt_file_path)
         print(f'Loaded original data with {len(self.original_data.raw_texts)} texts.')
         self.num_users = len(self.original_data.user_id_to_node)
+
 
     def get_user_raw_text(self, dgl_user_id):
         # print(f'Getting raw text for user id: {dgl_user_id}')
@@ -39,5 +41,6 @@ class DataMapper:
         return self.original_data.item_titles[dgl_item_id]
     
     def get_item_raw_text(self, dgl_item_id):
-        print(f'id sum: {dgl_item_id + self.num_users}, num_users: {self.num_users}, dgl_item_id: {dgl_item_id}')
+        if self.debug_mode:
+            print(f'id sum: {dgl_item_id + self.num_users}, num_users: {self.num_users}, dgl_item_id: {dgl_item_id}')
         return self.original_data.raw_texts[dgl_item_id + self.num_users]

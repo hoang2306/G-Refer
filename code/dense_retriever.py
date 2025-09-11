@@ -83,18 +83,22 @@ def parse_args():
                         help='Data split to use (trn, val, or tst)')
     parser.add_argument('--topk', type=int, default=5, help='Number of top-k similar nodes to retrieve')
     parser.add_argument('--pruning_score', type=float, default=0, help='Pruning score for similarity')
+
+    # for debug mode
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
     return parser.parse_args()
 
 def main():
     args = parse_args()
+    # print(f'args: {args}')
     
     print(f"Processing {args.dataset} {args.split} data...")
     
     pyg_data = load_data(f'data/{args.dataset}/data_{args.split}.pt')  # Load PyG data
     pkl_data = load_pickle(f'data/{args.dataset}/{args.split}.pkl')
 
-    data_mapper = DataMapper(f'data/{args.dataset}/data_{args.split}.pt')
-    
+    data_mapper = DataMapper(pt_file_path=f'data/{args.dataset}/data_{args.split}.pt', debug_mode=args.debug)
+
     retriever = DenseRetriever(args.pruning_score)
     retrieval_results = retriever.retrieve_topk(pyg_data, pkl_data, data_mapper, args.topk)
 
