@@ -21,6 +21,9 @@ def parse_args():
     parser.add_argument('--text_encoder', default='SentenceBert', type=str, choices=['Bert', 'Roberta', 'SentenceBert', 'SimCSE', 'e5', 't5'],
                         help='Text encoder to use (Bert, Roberta, SentenceBert, SimCSE, e5, or t5)')
     parser.add_argument('--k', type=int, default=2, help='Number of paths, users, and items to select for each user-item pair')
+    
+    # debug mode
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
     return parser.parse_args()
 
 def flatten_pagelink_retrieval_results(pagelink_retrieval_results, mapper, k):
@@ -154,7 +157,8 @@ def rerank_flattened_results(args, all_samples, mapper, write_file):
         uids = [sample['uid'] for sample in batch]
         iids = [sample['iid'] for sample in batch]
 
-        print(f'iids: {iids}') # for debug
+        if args.debug:
+            print(f'iids: {iids}') # for debug
         slash()
         
         user_texts = [mapper.get_user_raw_text(uid) for uid in uids]
