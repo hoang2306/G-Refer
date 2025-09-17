@@ -159,7 +159,7 @@ def rerank_flattened_results(args, all_samples, mapper, write_file):
 
         if args.debug:
             print(f'iids: {iids}') # for debug
-        slash()
+            slash() 
         
         user_texts = [mapper.get_user_raw_text(uid) for uid in uids]
         item_texts = [mapper.get_item_raw_text(iid) for iid in iids]

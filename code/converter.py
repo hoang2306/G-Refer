@@ -11,8 +11,8 @@ from utils import clean_text
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Convert dataset to PyG format')
-    parser.add_argument('--dataset', type=str, choices=['yelp', 'google', 'amazon'], required=True,
-                        help='Dataset to convert (yelp, google, or amazon)')
+    parser.add_argument('--dataset', type=str, choices=['yelp', 'google', 'amazon', 'automotive', 'sports_and_outdoors'], required=True,
+                        help='Dataset to convert (yelp, google, amazon, automotive, sports_and_outdoors)')
     parser.add_argument('--split', type=str, choices=['trn', 'val', 'tst'], required=True,
                         help='Data split to convert (trn, val, or tst)')
     parser.add_argument('--text_encoder', default='SentenceBert', type=str, choices=['Bert', 'Roberta', 'SentenceBert', 'SimCSE', 'e5', 't5'],
