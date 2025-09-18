@@ -106,7 +106,8 @@ def main():
     # item_combined_texts = [f"Title: {title}\nSummary: {text}" for title, text in zip(item_titles, item_texts)]
     
     all_texts = ordered_user_texts + ordered_item_texts
-    print(f'len of all_texts: {len(all_texts)}') if args.debug else None
+    if args.debug:
+        print(f'all texts: {all_texts}')
 
     text_model = TextModel(args.text_encoder)
 
