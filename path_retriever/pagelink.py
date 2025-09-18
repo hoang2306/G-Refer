@@ -157,7 +157,9 @@ for i in tqdm(test_ids):
                                                             args.max_path_length,
                                                             return_mask=True)
         except Exception as e:
-            # print(f"Error explaining edge ({src_nid}, {tgt_nid}): {str(e)}")
+            if args.debug:
+                print(f"Error explaining edge ({src_nid}, {tgt_nid}): {str(e)}")
+                exit()
             cnt_edge_error += 1
             if cnt_edge_error % 100 == 0:
                 print(f'Number of edges failed to explain: {cnt_edge_error}')
