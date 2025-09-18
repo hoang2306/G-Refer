@@ -3,3 +3,7 @@ path_retriever/datasets
 path_retriever/saved_explanations
 data/
 path_retriever/saved_models
+
+check_cuda.py
+check.py
+test_torch.py
