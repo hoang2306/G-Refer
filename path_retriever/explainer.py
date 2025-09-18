@@ -7,6 +7,9 @@ from collections import defaultdict
 from utils import get_ntype_hetero_nids_to_homo_nids, get_homo_nids_to_ntype_hetero_nids, get_ntype_pairs_to_cannonical_etypes
 from utils import hetero_src_tgt_khop_in_subgraph, get_neg_path_score_func, k_shortest_paths_with_max_length
 
+def slash(n=30): 
+    print('-' * n)
+
 def get_edge_mask_dict(ghetero):
     '''
     Create a dictionary mapping etypes to learnable edge masks 
@@ -574,6 +577,9 @@ class PaGELink(nn.Module):
         # Learn the edge mask on the computation graph
         if self.debug:
             print(f'comp_g: {comp_g}')
+            slash()
+            print(f'ghetero: {ghetero}')
+            
         
         if self.debug: 
             print(f'start comp_g_edge_mask_dict')
