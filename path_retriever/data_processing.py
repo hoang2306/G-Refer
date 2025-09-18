@@ -153,6 +153,9 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage,
     pred_etype = 'likes'
     neg = 'src_tgt_neg'
     processed_g = process_data(g, val_ratio, test_ratio, src_ntype, tgt_ntype, pred_etype, neg)
+    if debug:
+        print(f'processed_g: {processed_g}')
+
     if stage == 'step1':
         return g, processed_g
     elif stage == 'step2':
@@ -160,7 +163,8 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage,
         src, dst = g.edges(etype=pred_etype)
 
         if debug:
-            print(f'All {pred_etype} edges: {src.shape[0]}')
+            # print(f'All {pred_etype} edges: {src.shape[0]}')
+            pass 
 
         # Create new graph with all 'likes' edges
         test_pos_g = dgl.heterograph({(src_ntype, pred_etype, tgt_ntype): (src, dst)}, 
