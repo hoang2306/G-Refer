@@ -5,8 +5,8 @@ from utils import load_pickle, load_data
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Convert dataset to DGL format')
-    parser.add_argument('--dataset', type=str, choices=['yelp', 'google', 'amazon'], required=True,
-                        help='Dataset to convert (yelp, google, or amazon)')
+    parser.add_argument('--dataset', type=str, choices=['yelp', 'google', 'amazon', 'automotive', 'sports_and_outdoors'], required=True,
+                        help='Dataset to convert (yelp, google, amazon, automotive, sports_and_outdoors)')
     parser.add_argument('--split', type=str, choices=['trn', 'val', 'tst'], required=True,
                         help='Data split to convert (trn, val, or tst)')
     return parser.parse_args()
