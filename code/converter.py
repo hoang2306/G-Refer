@@ -17,6 +17,9 @@ def parse_args():
                         help='Data split to convert (trn, val, or tst)')
     parser.add_argument('--text_encoder', default='SentenceBert', type=str, choices=['Bert', 'Roberta', 'SentenceBert', 'SimCSE', 'e5', 't5'],
                         help='Text encoder to use (Bert, Roberta, SentenceBert, SimCSE, e5, or t5)')
+    
+    # debug flag
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode with smaller dataset')
     return parser.parse_args()
 
 def main():
@@ -112,6 +115,8 @@ def main():
     batch_size = 128
     for i in tqdm.tqdm(range(0, len(all_texts), batch_size), desc="Processing texts"):
         batch = all_texts[i:i+batch_size]
+        if args.debug:
+            print(f'batch: {batch}')
         with torch.no_grad():
             batch_features = text_model(batch).cpu()
         text_features.append(batch_features)
