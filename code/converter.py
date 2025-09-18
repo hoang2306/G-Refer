@@ -54,6 +54,9 @@ def main():
             text = clean_text(profile['user summary'], args.dataset)
         user_texts[user_id] = text
 
+    if args.debug:
+        print(f'user_texts: {user_texts}')
+
     # Load item profiles
     with open(f'data/{args.dataset}/item_profile.json', 'r') as f:
         item_profiles = [json.loads(line) for line in f]
@@ -106,8 +109,8 @@ def main():
     # item_combined_texts = [f"Title: {title}\nSummary: {text}" for title, text in zip(item_titles, item_texts)]
     
     all_texts = ordered_user_texts + ordered_item_texts
-    if args.debug:
-        print(f'all texts: {all_texts}')
+    # if args.debug:
+    #     print(f'all texts: {all_texts}')
 
     text_model = TextModel(args.text_encoder)
 
