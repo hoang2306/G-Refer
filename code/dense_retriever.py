@@ -77,8 +77,8 @@ class DenseRetriever(nn.Module):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Retrieve top-k similar users and items')
-    parser.add_argument('--dataset', type=str, choices=['yelp', 'google', 'amazon'], required=True,
-                        help='Dataset to use (yelp, google, or amazon)')
+    parser.add_argument('--dataset', type=str, choices=['yelp', 'google', 'amazon', 'automotive', 'sports_and_outdoors'], required=True,
+                        help='Dataset to use (yelp, google, amazon, automotive, sports_and_outdoors)')
     parser.add_argument('--split', type=str, choices=['trn', 'val', 'tst'], required=True,
                         help='Data split to use (trn, val, or tst)')
     parser.add_argument('--topk', type=int, default=5, help='Number of top-k similar nodes to retrieve')
