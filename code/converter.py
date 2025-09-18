@@ -59,7 +59,7 @@ def main():
     item_texts = {}
     for profile in item_profiles:
         item_id = profile['iid']  # Assuming each profile has an 'item_id' field
-        if args.dataset == 'amazon':
+        if args.dataset in ['amazon', 'automotive', 'sports_and_outdoors']:
             text = clean_text(profile['completion'], args.dataset)
         else:
             text = clean_text(profile['business summary'], args.dataset)
