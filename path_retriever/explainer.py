@@ -572,6 +572,8 @@ class PaGELink(nn.Module):
                                                              ghetero, 
                                                              num_hops)
         # Learn the edge mask on the computation graph
+        if self.debug:
+            print(f'comp_g: {comp_g}')
         
         if self.debug: 
             print(f'start comp_g_edge_mask_dict')
