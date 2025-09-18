@@ -52,8 +52,8 @@ def main():
             text = clean_text(profile['completion'], args.dataset)
         else:
             text = clean_text(profile['user summary'], args.dataset)
-        print(f'text: {text}')
-        break
+        # print(f'text: {text}')
+        # break
         user_texts[user_id] = text
 
     if args.debug:
