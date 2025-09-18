@@ -101,7 +101,7 @@ def process_data(g,
     return mp_g, train_pos_g, train_neg_g, val_pos_g, val_neg_g, test_pos_g, test_neg_g
 
 
-def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage):
+def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage, debug=False):
     '''
     Parameters
     ----------
@@ -136,12 +136,13 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage)
     print(f'graph loading from: {graph_saving_path}')
     graph_list, _ = dgl.load_graphs(graph_saving_path)
 
-    # print('-'*30)
-    # print(f'graph loaded: {graph_list}')
-    # print('-'*30)
+    if debug:
+        # print(f'graph loaded: {graph_list}')
+        print(f'g: {graph_list[0]}')
     # pred_pair_to_edge_labels = torch.load(f'{graph_saving_path}_pred_pair_to_edge_labels')
     # pred_pair_to_path_labels = torch.load(f'{graph_saving_path}_pred_pair_to_path_labels')
     g = graph_list[0]
+
     # if 'synthetic' in dataset_name:
     #     src_ntype, tgt_ntype = 'user', 'item'
     # elif 'citation' in dataset_name:

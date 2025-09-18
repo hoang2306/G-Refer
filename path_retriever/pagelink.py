@@ -104,7 +104,7 @@ if not args.saved_model_name:
 print_args(args)
 set_seed(0)
 
-processed_g = load_dataset(args.dataset_dir, args.dataset_name, args.split, args.valid_ratio, args.test_ratio, args.stage)[1]
+processed_g = load_dataset(args.dataset_dir, args.dataset_name, args.split, args.valid_ratio, args.test_ratio, args.stage, args.debug)[1]
 if args.debug:
     print(f'processed_g: {processed_g}')
     slash()
