@@ -45,7 +45,7 @@ def main():
     user_texts = {}
     for profile in user_profiles:
         user_id = profile['uid']  # Assuming each profile has a 'user_id' field
-        if args.dataset == 'amazon':
+        if args.dataset in ['amazon', 'automotive', 'sports_and_outdoors']:
             text = clean_text(profile['completion'], args.dataset)
         else:
             text = clean_text(profile['user summary'], args.dataset)
