@@ -7,3 +7,5 @@ path_retriever/saved_models
 check_cuda.py
 check.py
 test_torch.py
+*.pyc
+__pycache__/
