@@ -156,6 +156,8 @@ for i in tqdm(test_ids):
     with torch.no_grad():
         pred = model(src_nid, tgt_nid, mp_g).sigmoid().item() > 0.5
 
+    print(f'pred: {pred}')
+
     if pred:
         src_tgt = ((args.src_ntype, int(src_nid)), (args.tgt_ntype, int(tgt_nid)))
         try:
@@ -171,7 +173,7 @@ for i in tqdm(test_ids):
         except Exception as e:
             if args.debug:
                 print(f"Error explaining edge ({src_nid}, {tgt_nid}): {str(e)}")
-                exit()
+                # exit()
             cnt_edge_error += 1
             if cnt_edge_error % 100 == 0:
                 print(f'Number of edges failed to explain: {cnt_edge_error}')
