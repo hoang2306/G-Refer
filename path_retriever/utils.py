@@ -190,7 +190,7 @@ def get_homo_nids_to_ntype_hetero_nids(ghetero):
     homo_nids_to_ntype_hetero_nids = dict(zip(homo_nids, ntypes_hetero_nids))
     return homo_nids_to_ntype_hetero_nids
 
-def get_ntype_hetero_nids_to_homo_nids(ghetero):
+def get_ntype_hetero_nids_to_homo_nids(ghetero, debug=False):
     '''
     Create a dictionary mapping tuples as (node type, node id) of the input heterogeneous graph
     to the node ids of the homogeneous version of the input graph.
@@ -203,9 +203,11 @@ def get_ntype_hetero_nids_to_homo_nids(ghetero):
     ----------
     ntype_hetero_nids_to_homo_nids : dict
     '''
-    # print('start get_homo_nids_to_ntype_hetero_nids')
+    if debug:
+        print('start get_ntype_hetero_nids_to_homo_nids')
     tmp = get_homo_nids_to_ntype_hetero_nids(ghetero)
-    # print(f'done get_homo_nids_to_ntype_hetero_nids')
+    if debug:
+        print(f'done get_homo_nids_to_ntype_hetero_nids')
     ntype_hetero_nids_to_homo_nids = {v: k for k, v in tmp.items()}
     return ntype_hetero_nids_to_homo_nids
 
