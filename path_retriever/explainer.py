@@ -341,7 +341,11 @@ class PaGELink(nn.Module):
 
         if self.debug:
             print(f'start ntype_hetero_nids_to_homo_nids')
-        ntype_hetero_nids_to_homo_nids = get_ntype_hetero_nids_to_homo_nids(ghetero)   
+        ntype_hetero_nids_to_homo_nids = get_ntype_hetero_nids_to_homo_nids(ghetero)  
+        
+        if self.debug:
+            print(f'end ntype_hetero_nids_to_homo_nids')
+
         if self.debug:
             print(f'done ntype_hetero_nids_to_homo_nids') 
         homo_src_nid = ntype_hetero_nids_to_homo_nids[(self.src_ntype, int(src_nid))]
