@@ -14,7 +14,7 @@ def load_pickle(file_path):
 def clean_text(text, dataset):
     if dataset in ['yelp', 'google']:
         return text.split('"summarization": "')[1].rsplit('"', 1)[0].strip()
-    elif dataset == 'amazon':
+    elif dataset in ['amazon', 'automotive', 'sports_and_outdoors']:
         json_data = json.loads(text.replace('\n', ''))
         return json_data['summarization'].rsplit('"', 1)[0].strip()
 
