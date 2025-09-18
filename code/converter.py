@@ -57,7 +57,8 @@ def main():
         user_texts[user_id] = text
 
     if args.debug:
-        print(f'user_texts: {user_texts}')
+        # print(f'user_texts: {user_texts}')
+        print()
 
     # Load item profiles
     with open(f'data/{args.dataset}/item_profile.json', 'r') as f:
