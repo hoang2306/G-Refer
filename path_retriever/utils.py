@@ -177,10 +177,11 @@ def get_homo_nids_to_ntype_hetero_nids(ghetero, debug=False):
     '''
     if debug:
         print('start get_homo_nids_to_ntype_hetero_nids')
+        print(f'ghetero: {ghetero}')
     ghomo = dgl.to_homogeneous(ghetero)
     if debug:
         print(f'done ghomo')
-        
+
     homo_nids = range(ghomo.num_nodes())
     # print(ghomo.num_nodes())
     # print(f'done homo_nids')
