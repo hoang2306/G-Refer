@@ -139,7 +139,7 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage,
     if debug:
         # print(f'graph loaded: {graph_list}')
         print('debug on graph')
-        print(f'g: {graph_list[0]}')
+        print(f'g: {graph_list[0]}') # edge: ('user', 'likes', 'item'): 62461
     # pred_pair_to_edge_labels = torch.load(f'{graph_saving_path}_pred_pair_to_edge_labels')
     # pred_pair_to_path_labels = torch.load(f'{graph_saving_path}_pred_pair_to_path_labels')
     g = graph_list[0]
@@ -158,7 +158,10 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage,
     elif stage == 'step2':
         # Get all 'likes' edges
         src, dst = g.edges(etype=pred_etype)
-        
+
+        if debug:
+            print(f'All {pred_etype} edges: {src.shape[0]}')
+
         # Create new graph with all 'likes' edges
         test_pos_g = dgl.heterograph({(src_ntype, pred_etype, tgt_ntype): (src, dst)}, 
                                      num_nodes_dict={ntype: g.number_of_nodes(ntype) for ntype in g.ntypes})
