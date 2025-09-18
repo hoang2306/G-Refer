@@ -138,6 +138,7 @@ def load_dataset(dataset_dir, dataset_name, split, val_ratio, test_ratio, stage,
 
     if debug:
         # print(f'graph loaded: {graph_list}')
+        slash()
         print(f'g: {graph_list[0]}')
     # pred_pair_to_edge_labels = torch.load(f'{graph_saving_path}_pred_pair_to_edge_labels')
     # pred_pair_to_path_labels = torch.load(f'{graph_saving_path}_pred_pair_to_path_labels')
