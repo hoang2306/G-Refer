@@ -75,7 +75,8 @@ parser.add_argument('--save_explanation', default=False, action='store_true',
 parser.add_argument('--saved_explanation_dir', type=str, default='saved_explanations',
                     help='directory of saved explanations')
 parser.add_argument('--config_path', type=str, default='', help='path of saved configuration args')
-
+# debug flag
+parser.add_argument('--debug', action='store_true', help='Enable debug mode with smaller dataset')
 args = parser.parse_args()
 
 if args.config_path:
@@ -121,6 +122,7 @@ pagelink = PaGELink(model,
                     alpha=args.alpha, 
                     beta=args.beta, 
                     num_epochs=args.num_epochs,
+                    args=args,
                     log=False).to(device)
 
 

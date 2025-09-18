@@ -185,6 +185,7 @@ class PaGELink(nn.Module):
                  num_epochs=100,
                  alpha=1.0,
                  beta=1.0,
+                 args=None,
                  log=False):
         super(PaGELink, self).__init__()
         self.model = model
@@ -196,6 +197,8 @@ class PaGELink(nn.Module):
         self.alpha = alpha
         self.beta = beta
         self.log = log
+        self.args = args
+        self.debug = self.args.debug
         
         self.all_loss = defaultdict(list)
 
@@ -549,7 +552,9 @@ class PaGELink(nn.Module):
             key=`etype`, value=torch.nn.Parameter with size being the number of `etype` edges
         """
         # Extract the computation graph (k-hop subgraph)
-        # print(f'start explain')
+
+        if self.debug:
+            print(f'start explain')
         (comp_g_src_nid, 
          comp_g_tgt_nid, 
          comp_g, 
