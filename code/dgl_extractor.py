@@ -49,6 +49,7 @@ def create_dgl_graph(pyg_data, pkl_data, debug=False):
             buys_edges.add((user_idx, item_idx))
             if debug:
                 print(f'Adding buys edge: ({user_idx}, {item_idx})')
+                break
 
     if debug:
         print(f'len buys edges: {len(buys_edges)}')
