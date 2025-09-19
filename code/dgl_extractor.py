@@ -40,7 +40,9 @@ def create_dgl_graph(pyg_data, pkl_data, debug=False):
     buys_edges = set()
     
     # Process all edges from pyg_data
+    cnt = 0 
     for src, dst in tqdm(pyg_data.edge_index.t().tolist(), desc="Processing edges"):
+        cnt += 1
         if debug:
             print(f'src: {src}, dst: {dst}')
             pass
@@ -53,7 +55,7 @@ def create_dgl_graph(pyg_data, pkl_data, debug=False):
                 break
                 # pass
 
-    
+    print(f"Total edges processed: {cnt}")
     print(f'len buys edges: {len(buys_edges)}')
     # Remove likes edges from buys edges
     buys_edges -= likes_edges
