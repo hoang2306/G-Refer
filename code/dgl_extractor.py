@@ -9,6 +9,8 @@ def parse_args():
                         help='Dataset to convert (yelp, google, amazon, automotive, sports_and_outdoors)')
     parser.add_argument('--split', type=str, choices=['trn', 'val', 'tst'], required=True,
                         help='Data split to convert (trn, val, or tst)')
+    # debug flag
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode with smaller dataset')
     return parser.parse_args()
 
 def create_dgl_graph(pyg_data, pkl_data):
@@ -78,6 +80,10 @@ def main():
     print(f"Processing {args.dataset} {args.split} data...")
     
     pyg_data = load_data(f'data/{args.dataset}/data_{args.split}.pt')
+
+    if args.debug:
+        print(pyg_data)
+
     pkl_data = load_pickle(f'data/{args.dataset}/{args.split}.pkl')
 
     # slash()
@@ -86,6 +92,7 @@ def main():
     # print(f'pkl_data: {pkl_data}')
     
     dgl_graph = create_dgl_graph(pyg_data, pkl_data)
+    
 
     # slash()
     # print(f'dgl_graph: {dgl_graph}')
