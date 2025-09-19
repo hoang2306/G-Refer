@@ -50,7 +50,7 @@ def main():
         if args.debug:
             print(f'profile: {profile}')
             break
-        user_id = profile['uid'] if args.dataset in ['automotive', 'sports_and_outdoors'] else profile['iid']
+        user_id = profile['iid'] if args.dataset in ['automotive', 'sports_and_outdoors'] else profile['uid']
         if args.dataset in ['amazon', 'automotive', 'sports_and_outdoors']:
             text = clean_text(profile['completion'], args.dataset)
         else:
