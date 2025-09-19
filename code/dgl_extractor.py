@@ -43,6 +43,7 @@ def create_dgl_graph(pyg_data, pkl_data, debug=False):
     for src, dst in tqdm(pyg_data.edge_index.t().tolist(), desc="Processing edges"):
         if debug:
             print(f'src: {src}, dst: {dst}')
+            pass
         if src < num_users:  # src is a user node
             user_idx = src
             item_idx = dst - num_users
@@ -50,9 +51,10 @@ def create_dgl_graph(pyg_data, pkl_data, debug=False):
             if debug:
                 print(f'Adding buys edge: ({user_idx}, {item_idx})')
                 break
+                # pass
 
-    if debug:
-        print(f'len buys edges: {len(buys_edges)}')
+    
+    print(f'len buys edges: {len(buys_edges)}')
     # Remove likes edges from buys edges
     buys_edges -= likes_edges
 
