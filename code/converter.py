@@ -47,6 +47,9 @@ def main():
     # Create user_texts dictionary
     user_texts = {}
     for profile in user_profiles:
+        if args.debug:
+            print(f'profile: {profile}')
+            break
         user_id = profile['uid']  # Assuming each profile has a 'user_id' field
         if args.dataset in ['amazon', 'automotive', 'sports_and_outdoors']:
             text = clean_text(profile['completion'], args.dataset)
