@@ -44,13 +44,14 @@ def create_dgl_graph(pyg_data, pkl_data, debug=False):
         if debug:
             print(f'src: {src}, dst: {dst}')
         if src < num_users:  # src is a user node
-            if debug:
-                print('ok')
-                break
             user_idx = src
             item_idx = dst - num_users
             buys_edges.add((user_idx, item_idx))
+            if debug:
+                print(f'Adding buys edge: ({user_idx}, {item_idx})')
 
+    if debug:
+        print(f'len buys edges: {len(buys_edges)}')
     # Remove likes edges from buys edges
     buys_edges -= likes_edges
 
