@@ -41,6 +41,8 @@ def create_dgl_graph(pyg_data, pkl_data, debug=False):
     
     # Process all edges from pyg_data
     for src, dst in tqdm(pyg_data.edge_index.t().tolist(), desc="Processing edges"):
+        if debug:
+            print(f'src: {src}, dst: {dst}')
         if src < num_users:  # src is a user node
             if debug:
                 print('ok')
