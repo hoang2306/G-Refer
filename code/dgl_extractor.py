@@ -13,7 +13,7 @@ def parse_args():
     parser.add_argument('--debug', action='store_true', help='Enable debug mode with smaller dataset')
     return parser.parse_args()
 
-def create_dgl_graph(pyg_data, pkl_data):
+def create_dgl_graph(pyg_data, pkl_data, debug=False):
     num_users = len(pyg_data.user_id_to_node)
     num_items = len(pyg_data.item_id_to_node)
     
@@ -42,6 +42,9 @@ def create_dgl_graph(pyg_data, pkl_data):
     # Process all edges from pyg_data
     for src, dst in tqdm(pyg_data.edge_index.t().tolist(), desc="Processing edges"):
         if src < num_users:  # src is a user node
+            if debug:
+                print('ok')
+                break
             user_idx = src
             item_idx = dst - num_users
             buys_edges.add((user_idx, item_idx))
@@ -82,7 +85,9 @@ def main():
     pyg_data = load_data(f'data/{args.dataset}/data_{args.split}.pt')
 
     if args.debug:
-        print(pyg_data)
+        # num of edge: 126868/2 = 63434
+        # print(pyg_data)
+        pass
 
     pkl_data = load_pickle(f'data/{args.dataset}/{args.split}.pkl')
 
@@ -91,7 +96,7 @@ def main():
     # slash()
     # print(f'pkl_data: {pkl_data}')
     
-    dgl_graph = create_dgl_graph(pyg_data, pkl_data)
+    dgl_graph = create_dgl_graph(pyg_data, pkl_data, debug=args.debug)
     
 
     # slash()
