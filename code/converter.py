@@ -9,52 +9,77 @@ import pickle
 from model import TextModel
 from utils import clean_text
 
+
 def parse_args():
-    parser = argparse.ArgumentParser(description='Convert dataset to PyG format')
-    parser.add_argument('--dataset', type=str, choices=['yelp', 'google', 'amazon', 'automotive', 'sports_and_outdoors'], required=True,
-                        help='Dataset to convert (yelp, google, amazon, automotive, sports_and_outdoors)')
-    parser.add_argument('--split', type=str, choices=['trn', 'val', 'tst'], required=True,
-                        help='Data split to convert (trn, val, or tst)')
-    parser.add_argument('--text_encoder', default='SentenceBert', type=str, choices=['Bert', 'Roberta', 'SentenceBert', 'SimCSE', 'e5', 't5'],
-                        help='Text encoder to use (Bert, Roberta, SentenceBert, SimCSE, e5, or t5)')
-    
+    parser = argparse.ArgumentParser(description="Convert dataset to PyG format")
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        choices=["yelp", "google", "amazon", "automotive", "sports_and_outdoors"],
+        required=True,
+        help="Dataset to convert (yelp, google, amazon, automotive, sports_and_outdoors)",
+    )
+    parser.add_argument(
+        "--split",
+        type=str,
+        choices=["trn", "val", "tst"],
+        required=True,
+        help="Data split to convert (trn, val, or tst)",
+    )
+    parser.add_argument(
+        "--text_encoder",
+        default="SentenceBert",
+        type=str,
+        choices=["Bert", "Roberta", "SentenceBert", "SimCSE", "e5", "t5"],
+        help="Text encoder to use (Bert, Roberta, SentenceBert, SimCSE, e5, or t5)",
+    )
+
     # debug flag
-    parser.add_argument('--debug', action='store_true', help='Enable debug mode with smaller dataset')
+    parser.add_argument(
+        "--debug", action="store_true", help="Enable debug mode with smaller dataset"
+    )
     return parser.parse_args()
+
 
 def main():
     args = parse_args()
 
-    df = pd.read_csv(f'data/{args.dataset}/total_{args.split}.csv')
+    df = pd.read_csv(f"data/{args.dataset}/total_{args.split}.csv")
 
-    unique_users = df['user'].unique()
-    unique_items = df['item'].unique()
+    unique_users = df["user"].unique()
+    unique_items = df["item"].unique()
 
     # Process all splits for titles
-    splits = ['trn', 'val', 'tst']
+    splits = ["trn", "val", "tst"]
     all_pkl_data = {}
     for split in splits:
-        with open(f'data/{args.dataset}/{split}.pkl', 'rb') as f:
+        with open(f"data/{args.dataset}/{split}.pkl", "rb") as f:
             all_pkl_data[split] = pickle.load(f)
 
     user_id_to_node = {id: i for i, id in enumerate(unique_users)}
-    item_id_to_node = {id: i + len(user_id_to_node) for i, id in enumerate(unique_items)}
+    item_id_to_node = {
+        id: i + len(user_id_to_node) for i, id in enumerate(unique_items)
+    }
 
     # Load user profiles
-    with open(f'data/{args.dataset}/user_profile.json', 'r') as f:
+    with open(f"data/{args.dataset}/user_profile.json", "r") as f:
         user_profiles = [json.loads(line) for line in f]
-    
+
     # Create user_texts dictionary
     user_texts = {}
     for profile in user_profiles:
         if args.debug:
-            print(f'profile: {profile}')
+            print(f"profile: {profile}")
             break
-        user_id = profile['iid'] if args.dataset in ['automotive', 'sports_and_outdoors'] else profile['uid']
-        if args.dataset in ['amazon', 'automotive', 'sports_and_outdoors']:
-            text = clean_text(profile['completion'], args.dataset)
+        user_id = (
+            profile["iid"]
+            if args.dataset in ["automotive", "sports_and_outdoors"]
+            else profile["uid"]
+        )
+        if args.dataset in ["amazon", "automotive", "sports_and_outdoors"]:
+            text = clean_text(profile["completion"], args.dataset)
         else:
-            text = clean_text(profile['user summary'], args.dataset)
+            text = clean_text(profile["user summary"], args.dataset)
         # print(f'text: {text}')
         # break
         user_texts[user_id] = text
@@ -64,17 +89,17 @@ def main():
         print()
 
     # Load item profiles
-    with open(f'data/{args.dataset}/item_profile.json', 'r') as f:
+    with open(f"data/{args.dataset}/item_profile.json", "r") as f:
         item_profiles = [json.loads(line) for line in f]
-    
+
     # Create item_texts dictionary
     item_texts = {}
     for profile in item_profiles:
-        item_id = profile['iid']  # Assuming each profile has an 'item_id' field
-        if args.dataset in ['amazon', 'automotive', 'sports_and_outdoors']:
-            text = clean_text(profile['completion'], args.dataset)
+        item_id = profile["iid"]  # Assuming each profile has an 'item_id' field
+        if args.dataset in ["amazon", "automotive", "sports_and_outdoors"]:
+            text = clean_text(profile["completion"], args.dataset)
         else:
-            text = clean_text(profile['business summary'], args.dataset)
+            text = clean_text(profile["business summary"], args.dataset)
         item_texts[item_id] = text
 
     # Create ordered lists of texts based on user_id_to_node and item_id_to_node
@@ -88,46 +113,47 @@ def main():
     for item_id in unique_items:
         title = ""
         for split, pkl_data in all_pkl_data.items():
-            matching_rows = pkl_data[pkl_data['iid'] == item_id]
+            matching_rows = pkl_data[pkl_data["iid"] == item_id]
             if not matching_rows.empty:
-                title = matching_rows['title'].iloc[0]
+                title = matching_rows["title"].iloc[0]
                 if title:
                     break  # Stop searching if we found a title
-        
+
         if title:
             items_with_title += 1
         else:
             items_without_title += 1
-        
+
         item_titles.append(title)
 
     print(f"Items with title: {items_with_title}")
     print(f"Items without title: {items_without_title}")
 
     # Create bidirectional edge_index
-    user_nodes = [user_id_to_node[u] for u in df['user']]
-    item_nodes = [item_id_to_node[i] for i in df['item']]
-    edge_index = torch.tensor([
-        user_nodes + item_nodes, 
-        item_nodes + user_nodes
-    ], dtype=torch.long)
+    user_nodes = [user_id_to_node[u] for u in df["user"]]
+    item_nodes = [item_id_to_node[i] for i in df["item"]]
+    edge_index = torch.tensor(
+        [user_nodes + item_nodes, item_nodes + user_nodes], dtype=torch.long
+    )
 
     # item_combined_texts = [f"Title: {title}\nSummary: {text}" for title, text in zip(item_titles, item_texts)]
-    
+
     all_texts = ordered_user_texts + ordered_item_texts
     # if args.debug:
     #     print(f'all texts: {all_texts}')
 
     text_model = TextModel(args.text_encoder)
 
-    text_model = text_model.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+    text_model = text_model.to(
+        torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    )
     text_features = []
 
     batch_size = 128
     for i in tqdm.tqdm(range(0, len(all_texts), batch_size), desc="Processing texts"):
-        batch = all_texts[i:i+batch_size]
+        batch = all_texts[i : i + batch_size]
         if args.debug:
-            print(f'batch: {batch}')
+            print(f"batch: {batch}")
         with torch.no_grad():
             batch_features = text_model(batch).cpu()
         text_features.append(batch_features)
@@ -141,15 +167,16 @@ def main():
         x=text_features,
         user_id_to_node=user_id_to_node,
         item_id_to_node=item_id_to_node,
-        item_titles=item_titles
+        item_titles=item_titles,
     )
 
-    save_path = f'data/{args.dataset}/data_{args.split}.pt'
+    save_path = f"data/{args.dataset}/data_{args.split}.pt"
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     torch.save(data, save_path)
 
     print(f"Data saved to {save_path}")
-    print(f'len of data: {len(data.raw_texts)}')
+    print(f"len of data: {len(data.raw_texts)}")
+
 
 if __name__ == "__main__":
     main()

@@ -28,7 +28,6 @@ def to_device(batch, device):
 
 
 class MovingAverage:
-
     def __init__(self):
         self.count = 0
         self.total = 0
@@ -41,22 +40,26 @@ class MovingAverage:
 
         return self.mean
 
+
 def get_tokenizer(model_name_or_path, fast_tokenizer=True):
     if "llama" in model_name_or_path:
         from transformers.models.llama import LlamaTokenizer
+
         tokenizer = LlamaTokenizer.from_pretrained(
-            model_name_or_path, fast_tokenizer=fast_tokenizer)
+            model_name_or_path, fast_tokenizer=fast_tokenizer
+        )
         if tokenizer.pad_token is None:
             # assert tokenizer.eos_token is not None
             # tokenizer.add_special_tokens({'pad_token': tokenizer.eos_token})
-            tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-            tokenizer.padding_side = 'right'
+            tokenizer.add_special_tokens({"pad_token": "[PAD]"})
+            tokenizer.padding_side = "right"
     else:
         tokenizer = AutoTokenizer.from_pretrained(
-            model_name_or_path, fast_tokenizer=fast_tokenizer)
+            model_name_or_path, fast_tokenizer=fast_tokenizer
+        )
         tokenizer.pad_token = tokenizer.eos_token
         # make sure tokenizer is right pad in our logic
-        tokenizer.padding_side = 'right'
+        tokenizer.padding_side = "right"
     return tokenizer
 
 
@@ -74,10 +77,10 @@ def load_hf_tokenizer(model_name_or_path, fast_tokenizer=True):
     #                                               fast_tokenizer=True)
     #         print('i am loading here')
     # else:
-    tokenizer = LlamaTokenizer.from_pretrained(model_name_or_path,
-                                                padding_side = 'left',
-                                                fast_tokenizer=True)
-   
+    tokenizer = LlamaTokenizer.from_pretrained(
+        model_name_or_path, padding_side="left", fast_tokenizer=True
+    )
+
     # tokenizer = AutoTokenizer.from_pretrained(model_name_or_path,
     #                                               fast_tokenizer=True)
     return tokenizer
@@ -85,7 +88,7 @@ def load_hf_tokenizer(model_name_or_path, fast_tokenizer=True):
 
 def save_hf_format(model, tokenizer, args, sub_folder=""):
     # used to save huggingface format, so we can use it for hf.from_pretrained
-    model_to_save = model.module if hasattr(model, 'module') else model
+    model_to_save = model.module if hasattr(model, "module") else model
     CONFIG_NAME = "config.json"
     WEIGHTS_NAME = "pytorch_model.bin"
     output_dir = os.path.join(args.output_dir, sub_folder)
@@ -145,46 +148,55 @@ def get_all_reduce_mean(tensor):
 
 
 ## for dpo, ref: https://github.com/microsoft/DeepSpeedExamples/blob/master/applications/DeepSpeed-Chat/dschat/utils/utils.py
-def get_optimizer_grouped_parameters( model,
+def get_optimizer_grouped_parameters(
+    model,
     weight_decay,
     lora_lr=5e-4,
     no_decay_name_list=[
-        "bias", "layer_norm.weight", "layernorm.weight", "norm.weight",
-        "ln_f.weight"
+        "bias",
+        "layer_norm.weight",
+        "layernorm.weight",
+        "norm.weight",
+        "ln_f.weight",
     ],
     lora_name_list=["lora_right_weight", "lora_left_weight"],
 ):
     optimizer_grouped_parameters = [
         {
             "params": [
-                p for n, p in model.named_parameters()
-                if (not any(nd in n.lower() for nd in no_decay_name_list)
-                    and p.requires_grad and not any(nd in n.lower()
-                                                    for nd in lora_name_list))
+                p
+                for n, p in model.named_parameters()
+                if (
+                    not any(nd in n.lower() for nd in no_decay_name_list)
+                    and p.requires_grad
+                    and not any(nd in n.lower() for nd in lora_name_list)
+                )
             ],
-            "weight_decay":
-            weight_decay,
+            "weight_decay": weight_decay,
         },
         {
             "params": [
-                p for n, p in model.named_parameters()
-                if (not any(nd in n.lower() for nd in no_decay_name_list)
-                    and p.requires_grad and any(nd in n.lower()
-                                                for nd in lora_name_list))
+                p
+                for n, p in model.named_parameters()
+                if (
+                    not any(nd in n.lower() for nd in no_decay_name_list)
+                    and p.requires_grad
+                    and any(nd in n.lower() for nd in lora_name_list)
+                )
             ],
-            "weight_decay":
-            weight_decay,
-            "lr":
-            lora_lr
+            "weight_decay": weight_decay,
+            "lr": lora_lr,
         },
         {
             "params": [
-                p for n, p in model.named_parameters()
-                if (any(nd in n.lower()
-                        for nd in no_decay_name_list) and p.requires_grad)
+                p
+                for n, p in model.named_parameters()
+                if (
+                    any(nd in n.lower() for nd in no_decay_name_list)
+                    and p.requires_grad
+                )
             ],
-            "weight_decay":
-            0.0,
+            "weight_decay": 0.0,
         },
     ]
 
@@ -195,25 +207,26 @@ def get_optimizer_grouped_parameters( model,
     return non_empty_groups
 
 
-
 def _z3_params_to_fetch(param_list):
     return [
-        p for p in param_list
-        if hasattr(p, 'ds_id') and p.ds_status == ZeroParamStatus.NOT_AVAILABLE
+        p
+        for p in param_list
+        if hasattr(p, "ds_id") and p.ds_status == ZeroParamStatus.NOT_AVAILABLE
     ]
 
 
 def moving_average(model, model_ema, beta=0.992, device=None, zero_stage=0):
-    zero_stage_3 = (zero_stage == 3)
+    zero_stage_3 = zero_stage == 3
     with torch.no_grad():
-        for param, param_ema in zip(model.parameters(),
-                                    model_ema.parameters()):
+        for param, param_ema in zip(model.parameters(), model_ema.parameters()):
             # TODO: use prefiltering for efficiency
-            params_to_fetch = _z3_params_to_fetch([param, param_ema
-                                                   ]) if zero_stage_3 else []
+            params_to_fetch = (
+                _z3_params_to_fetch([param, param_ema]) if zero_stage_3 else []
+            )
             should_gather_param = len(params_to_fetch) > 0
             with deepspeed.zero.GatheredParameters(
-                    params_to_fetch, enabled=should_gather_param):
+                params_to_fetch, enabled=should_gather_param
+            ):
                 data = param.data
                 if device is not None:
                     data = data.to(device)
@@ -221,33 +234,30 @@ def moving_average(model, model_ema, beta=0.992, device=None, zero_stage=0):
 
 
 def save_zero_three_model(model_ema, tokenizer, global_rank, save_dir, zero_stage=0):
-    zero_stage_3 = (zero_stage == 3)
+    zero_stage_3 = zero_stage == 3
     os.makedirs(save_dir, exist_ok=True)
     WEIGHTS_NAME = "pytorch_model.bin"
-    CONFIG_NAME = 'config.json'
+    CONFIG_NAME = "config.json"
     output_model_file = os.path.join(save_dir, WEIGHTS_NAME)
     output_config_file = os.path.join(save_dir, CONFIG_NAME)
-    
-    model_to_save = model_ema.module if hasattr(model_ema,
-                                                'module') else model_ema
+
+    model_to_save = model_ema.module if hasattr(model_ema, "module") else model_ema
     if not zero_stage_3:
         if global_rank == 0:
             torch.save(model_to_save.state_dict(), output_model_file)
     else:
         output_state_dict = {}
         for k, v in model_to_save.named_parameters():
-
-            if hasattr(v, 'ds_id'):
-                with deepspeed.zero.GatheredParameters(_z3_params_to_fetch([v
-                                                                            ]),
-                                                       enabled=zero_stage_3):
+            if hasattr(v, "ds_id"):
+                with deepspeed.zero.GatheredParameters(
+                    _z3_params_to_fetch([v]), enabled=zero_stage_3
+                ):
                     v_p = v.data.cpu()
             else:
                 v_p = v.cpu()
             if global_rank == 0 and "lora" not in k:
                 output_state_dict[k] = v_p
         if global_rank == 0:
-            
             torch.save(output_state_dict, output_model_file)
             model_to_save.config.to_json_file(output_config_file)
             tokenizer.save_pretrained(save_dir)
