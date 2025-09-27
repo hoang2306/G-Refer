@@ -282,10 +282,10 @@ if args.save_explanation:
         os.makedirs(args.saved_explanation_dir)
 
     saved_edge_explanation_file = (
-        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_comp_g_edge_mask_{args.n_part}"
+        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_comp_g_edge_mask_batch_{args.n_part}"
     )
     saved_path_explanation_file = (
-        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_paths_{args.n_part}"
+        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_paths_batch_{args.n_part}"
     )
     pred_edge_to_comp_g_edge_mask = {
         edge: {k: v.cpu() for k, v in mask.items()}
