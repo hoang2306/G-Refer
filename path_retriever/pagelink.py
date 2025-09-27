@@ -210,7 +210,7 @@ if args.max_num_samples > 0:
 
 pred_edge_to_comp_g_edge_mask = {}
 pred_edge_to_paths = {}
-# print(f'start explaining {len(test_ids)} edges')
+print(f'start explaining {len(test_ids)} edges')
 
 cnt_edge_error = 0
 for i in tqdm(test_ids):
@@ -219,7 +219,7 @@ for i in tqdm(test_ids):
     with torch.no_grad():
         pred = model(src_nid, tgt_nid, mp_g).sigmoid().item() > 0.5
 
-    print(f"pred: {pred}")
+    # print(f"pred: {pred}")
 
     if pred:
         src_tgt = ((args.src_ntype, int(src_nid)), (args.tgt_ntype, int(tgt_nid)))

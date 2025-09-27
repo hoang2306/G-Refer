@@ -93,7 +93,7 @@ def main(
                 json.dump(
                     dict(
                         index=i + j,
-                        source_data=gsm8k_data,
+                        source_data= ,
                         input_str=input_str,
                         output_str=output_str,
                     ),
