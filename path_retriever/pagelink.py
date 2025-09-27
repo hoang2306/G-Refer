@@ -141,6 +141,11 @@ parser.add_argument(
 parser.add_argument(
     "--n_part", type=int, default=0, help="order of partition for explainer"
 )
+
+# sample flag
+parser.add_argument(
+    "--sample", action="store_true", help="whether to sample neighbors when computing the computation graph"
+)
 args = parser.parse_args()
 
 if args.config_path:
@@ -232,8 +237,12 @@ start_idx, end_idx = split_by_n(total_length=test_src_nids.shape[0], n_part=args
 print(f'start idx: {start_idx}')
 print(f'end idx: {end_idx-1}')
 
+if args.sample:
+    start_idx = 0
+    end_idx = 1 
+
 cnt_edge_error = 0
-for i in tqdm(range(start_idx, end_idx)):
+for i in tqdm(range(start_idx, end_idx)): #  start_idx -> end_idx - 1
     src_nid, tgt_nid = test_src_nids[i].unsqueeze(0), test_tgt_nids[i].unsqueeze(0)
 
     with torch.no_grad():
@@ -273,10 +282,10 @@ if args.save_explanation:
         os.makedirs(args.saved_explanation_dir)
 
     saved_edge_explanation_file = (
-        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_comp_g_edge_mask"
+        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_comp_g_edge_mask_{args.n_part}"
     )
     saved_path_explanation_file = (
-        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_paths"
+        f"pagelink_{args.saved_model_name}_{args.split}_pred_edge_to_paths_{args.n_part}"
     )
     pred_edge_to_comp_g_edge_mask = {
         edge: {k: v.cpu() for k, v in mask.items()}
