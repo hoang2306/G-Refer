@@ -29,6 +29,13 @@ class DataMapper:
     def get_item_raw_text(self, dgl_item_id):
         return self.original_data.raw_texts[dgl_item_id + self.num_users]
 
+def split_by_n(total_length, n_part, part_id):
+    length = total_length
+    part_size = (length + n_part - 1) // n_part  # làm tròn lên
+    start = part_id * part_size
+    end = min(start + part_size, length)
+    return start, end
+
 
 parser = argparse.ArgumentParser(description="Explain link predictor")
 parser.add_argument("--device_id", type=int, default=0)
@@ -126,6 +133,14 @@ parser.add_argument(
 parser.add_argument(
     "--debug", action="store_true", help="Enable debug mode with smaller dataset"
 )
+
+# batch data
+parser.add_argument(
+    "--n_batch", type=int, default=6, help="batch size (number of edges) for explainer"
+)
+parser.add_argument(
+    "--n_part", type=int, default=0, help="order of partition for explainer"
+)
 args = parser.parse_args()
 
 if args.config_path:
@@ -212,8 +227,13 @@ pred_edge_to_comp_g_edge_mask = {}
 pred_edge_to_paths = {}
 print(f'start explaining {len(test_ids)} edges')
 
+# split data id 
+start_idx, end_idx = split_by_n(total_length=test_src_nids.shape[0], n_part=args.n_batch, part_id=args.n_part)
+print(f'start idx: {start_idx}')
+print(f'end idx: {end_idx-1}')
+
 cnt_edge_error = 0
-for i in tqdm(test_ids):
+for i in tqdm(range(start_idx, end_idx)):
     src_nid, tgt_nid = test_src_nids[i].unsqueeze(0), test_tgt_nids[i].unsqueeze(0)
 
     with torch.no_grad():
