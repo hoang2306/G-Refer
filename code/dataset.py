@@ -36,8 +36,10 @@ class DataMapper:
 
     def get_user_raw_text(self, dgl_user_id):
         # print(f'Getting raw text for user id: {dgl_user_id}')
+        data = None 
         try:
-            data = self.original_data.raw_texts[dgl_user_id]
+            map_user_id = self.original_data.user_id_to_node[dgl_user_id]
+            data = self.original_data.raw_texts[map_user_id]
         except IndexError as e:
             print(f"IndexError: {e}. dgl_user_id: {dgl_user_id}, num_users: {self.num_users}")
         return data 
