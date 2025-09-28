@@ -214,7 +214,7 @@ def rerank_flattened_results(args, all_samples, mapper, write_file):
             slash()
 
         user_texts = [mapper.get_user_raw_text(mapper.original_data.user_id_to_node[uid]) for uid in uids]
-        item_texts = [mapper.get_item_raw_text(iid) for iid in iids]
+        item_texts = [mapper.get_item_raw_text(mapper.original_data.item_id_to_node[iid]) for iid in iids]
 
         combined_texts = [
             f"{user_text} {item_text}"
