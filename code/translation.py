@@ -208,9 +208,9 @@ def rerank_flattened_results(args, all_samples, mapper, write_file):
         iids = [sample["iid"] for sample in batch]
 
         if args.debug:
-            print(f"iids: {iids}")  # for debug
-            slash()
-            print(f"uids: {uids}")  # for debug
+            # print(f"iids: {iids}")  # for debug
+            # slash()
+            # print(f"uids: {uids}")  # for debug
             slash()
 
         user_texts = [mapper.get_user_raw_text(mapper.original_data.user_id_to_node[uid]) for uid in uids]
