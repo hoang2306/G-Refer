@@ -11,7 +11,11 @@ import torch
 import numpy as np
 
 # Define mappings
-item_map = {"amazon": "Book", "google": "Business", "yelp": "Business"}
+item_map = {
+    "amazon": "Book", "google": "Business", "yelp": "Business",
+    "automotive": "Automotive Product", 
+    "sports_and_outdoors": "Sports & Outdoor Product" 
+}
 split_map = {"trn": "train", "val": "eval", "tst": "test"}
 
 
@@ -35,6 +39,14 @@ def parse_args():
         type=int,
         default=2,
         help="Number of paths, users, and items to select for each user-item pair",
+    )
+
+    # custom pagelink results path 
+    parser.add_argument(
+        "--pagelink_result_path",
+        type=str,
+        default="",
+        help="Custom pagelink result path",
     )
 
     # debug mode
@@ -253,8 +265,11 @@ def main():
     write_file = f"convert_files/{args.dataset}/{split_map[args.split]}.json"
 
     # load pagelink retrieval results
+    pagelink_res_path = f"saved_explanations/pagelink_{args.dataset}_model_{args.split}_pred_edge_to_paths"
+    if args.pagelink_result_path != "":
+        pagelink_res_path = args.pagelink_result_path
     with open(
-        f"saved_explanations/pagelink_{args.dataset}_model_{args.split}_pred_edge_to_paths",
+        pagelink_res_path,
         "rb",
     ) as f:
         pagelink_retrieval_results = pickle.load(f)
