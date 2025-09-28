@@ -36,7 +36,11 @@ class DataMapper:
 
     def get_user_raw_text(self, dgl_user_id):
         # print(f'Getting raw text for user id: {dgl_user_id}')
-        return self.original_data.raw_texts[dgl_user_id]
+        try:
+            data = self.original_data.raw_texts[dgl_user_id]
+        except IndexError as e:
+            print(f"IndexError: {e}. dgl_user_id: {dgl_user_id}, num_users: {self.num_users}")
+        return data 
 
     def get_item_title(self, dgl_item_id):
         return self.original_data.item_titles[dgl_item_id]
