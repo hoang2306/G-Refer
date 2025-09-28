@@ -150,7 +150,8 @@ def sample_generation(args, merged_results, dict_data, pyg_data):
             user_message = "Given the book title, book profile, and user profile, please explain why the user would buy this book within 50 words."
         elif args.dataset in ["google", "yelp"]:
             user_message = "Given the business title, business profile, and user profile, please explain why the user would enjoy this business within 50 words."
-
+        elif args.dataset in ["automotive", "sports_and_outdoors"]:
+            user_message = "Given the product title, product profile, and user profile, please explain why the user would be interested in this product within 50 words."
         item_type = item_map[args.dataset]
         user_message += f" {item_type} title: {dict_data['title'][i]}. {item_type} profile: {dict_data['item_summary'][i]} User profile: {dict_data['user_summary'][i]}\n### "
 
