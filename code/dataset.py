@@ -49,8 +49,13 @@ class DataMapper:
         return self.original_data.item_titles[dgl_item_id]
 
     def get_item_raw_text(self, dgl_item_id):
-        if self.debug_mode:
-            print(
-                f"id sum: {dgl_item_id + self.num_users}, num_users: {self.num_users}, dgl_item_id: {dgl_item_id}"
-            )
-        return self.original_data.raw_texts[dgl_item_id + self.num_users]
+        # if self.debug_mode:
+        #     print(
+        #         f"id sum: {dgl_item_id + self.num_users}, num_users: {self.num_users}, dgl_item_id: {dgl_item_id}"
+        #     )
+        data = None
+        try:
+            data = self.original_data.raw_texts[dgl_item_id + self.num_users]
+        except IndexError as e:
+            print(f"IndexError: {e}. dgl_item_id: {dgl_item_id}, num_users: {self.num_users}, sum: {dgl_item_id + self.num_users}")
+        return data
