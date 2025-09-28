@@ -266,7 +266,7 @@ def main():
 
     # load pagelink retrieval results
     pagelink_res_path = f"saved_explanations/pagelink_{args.dataset}_model_{args.split}_pred_edge_to_paths"
-    if args.pagelink_result_path != "":
+    if args.pagelink_result_path != "": # ok?
         pagelink_res_path = args.pagelink_result_path
     with open(
         pagelink_res_path,
