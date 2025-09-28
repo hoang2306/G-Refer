@@ -247,7 +247,7 @@ def slash():
 def main():
     args = parse_args()
 
-    mapper = DataMapper(f"data/{args.dataset}/data_{args.split}.pt", debug=args.debug)
+    mapper = DataMapper(f"data/{args.dataset}/data_{args.split}.pt", debug_mode=args.debug)
 
     # load dense retrieval results
     with open(
