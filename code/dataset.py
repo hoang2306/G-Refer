@@ -55,7 +55,7 @@ class DataMapper:
         #     )
         data = None
         try:
-            # data = self.original_data.raw_texts[dgl_item_id + self.num_users]
+            # data = self.original_data.raw_texts[dgl_item_id + self.num_users] # old 
             data = self.original_data.raw_texts[dgl_item_id]
         except IndexError as e:
             print(f"IndexError: {e}. dgl_item_id: {dgl_item_id}, num_users: {self.num_users}, sum: {dgl_item_id + self.num_users}")
